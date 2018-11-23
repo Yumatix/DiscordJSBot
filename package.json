@@ -1,0 +1,10 @@
+{
+    "name" : "discordjs-bot",
+    "version" : "0.0.1",
+    "dependencies": {
+        "discord.js" : "*",
+        "node-opus" : "*",
+        "jshint" : "*",
+        "extend" : "*"
+    }
+}
