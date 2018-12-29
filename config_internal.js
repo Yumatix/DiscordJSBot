@@ -2,8 +2,8 @@ const fs = require("fs");
 const extend = require("extend");
 
 var config = {
-    name: "DiscordJS Bot",
-    version: "0.0.1"
+    name: "CielBot",
+    version: "0.0.2"
 };
 
 var external_config = JSON.parse(fs.readFileSync("./config.json"));
