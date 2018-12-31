@@ -1,4 +1,6 @@
 {
-    "bot_token" : "NTE1MzA4MzM1NDQ5NTA1ODEy.DuC8Yw.zbzXW6MpxPiUQaNdvHmSMCtGAQM",
-    "command_symbol" : "/"
+    "bot_token" : "",
+    "command_symbol" : "/",
+    "defaultSongSkipPercentage" : 50,
+    "streamMusic" : true
 }
