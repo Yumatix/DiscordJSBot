@@ -4,7 +4,7 @@
     "dependencies": {
         "discord.js": "*",
         "ffmpeg-binaries": "*",
-        "opusscript": "*",
+        "node-opus": "*",
         "jshint": "*",
         "extend": "*",
         "ytdl-core": "*"
