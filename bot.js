@@ -1,11 +1,15 @@
 //Import required dependancies
 const fs = require("fs");
+const extend = require("extend");
 const readline = require("readline").createInterface({input:process.stdin,output:process.stdout});
 const Discord = require("discord.js");
 require("./commands.js");
 
+console.log(commands);
+
 //Load JSON config files
-global.config = require("./config_internal.js");
+global.config = JSON.parse(fs.readFileSync("./config.json")); //require("./config_internal.js");
+extend(false, global.config, JSON.parse(fs.readFileSync("package.json")));
 
 //Initiate bot
 const client = new Discord.Client();
