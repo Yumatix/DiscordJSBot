@@ -26,7 +26,6 @@ class Song {
 
     //Initialize dispatcher and start song
     start() {
-        if (this.dispatcher) this.dispatcher.end(); //Insurance... we shouldn't need this
         let stream = ytdl(this.url, {filter: 'audioonly'});
         stream.on("error", (err) => {console.error(err)});
 

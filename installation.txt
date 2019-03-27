@@ -1,0 +1,7 @@
+(This is mostly just for me for now lol.. I'll have proper instructions when I'm out of alpha)
+
+LINUX
+
+1. install nodejs and npm (sudo apt install nodejs && sudo apt install npm)
+2. install ffmpeg (sudo apt install ffmpeg)
+4. clone repo, navigate to folder, and launch with node bot.js

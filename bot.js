@@ -5,8 +5,6 @@ const readline = require("readline").createInterface({input:process.stdin,output
 const Discord = require("discord.js");
 require("./commands.js");
 
-console.log(commands);
-
 //Load JSON config files
 global.config = JSON.parse(fs.readFileSync("./config.json")); //require("./config_internal.js");
 extend(false, global.config, JSON.parse(fs.readFileSync("package.json")));
@@ -17,9 +15,23 @@ client.queues = [];
 
 client.on("ready", () => {
     console.log(`Bot initiated. Type '?' for command line commands, or type ${config.command_symbol}help in discord for bot commands.`);
+
+    if (config.owner_id != "" && config.greet_owner)
+        setTimeout(() => {
+            client.fetchUser(config.owner_id).then(user => {
+                user.sendMessage(`Greetings, ${user.username}! I'm Ciel, your new bot for Discord! From here, you can configure me and manage things like user permissions without digging through files!`);
+            });
+        }, 3000);
+
 });
 
 client.on("message", (message) => {
+    if (message.guild == null && message.author.id == config.owner_id){
+        console.log("RECIEVED DM FROM OWNER");
+        message.author.sendMessage("<Generic owner response>");
+        return;
+    }
+
     if (message.content.substring(0,1) == config.command_symbol){
         var substrings = message.content.split(" ");
         var command = substrings[0].substring(1);
@@ -54,15 +66,27 @@ readline.on("line", (line) => {
     else if (commands[command] && commands[command].cli) commands[command](args);
     else console.log(`Unknown console command: ${command}`);
 });
-if (config.bot_token == ""){
-    console.log("ERROR: Bot token missing. Please add your bot token to config.json. For more information, check out the CielBot documentation.\nREMINDER: Keep your bot token secret at all times! Never give it to anyone, or they will have access to your bot!");
+
+try {
+    if (fs.existsSync("./keys.json")){ loadKeys(); }
+    else throw error;
+} catch (err) {
+    console.log("\"keys.json\" file missing! Regenerating. ");
+    fs.writeFileSync("./keys.json", `{\n    "bot_token" : "",\n    "google_api_key" : ""\n}`);
+}
+
+if (!config.bot_token || config.bot_token == ""){
+    console.log("ERROR: Bot token missing. Please add your bot token to keys.json. For more information, check out the CielBot documentation.\nREMINDER: Keep your bot token secret at all times! Never give it to anyone, or they will have access to your bot!");
     client.destroy();
     process.exit();
 }
+
 console.log(`Initiating bot..\nCommand Prefix: ${config.command_symbol}`);
 client.login(config.bot_token);
 
 
-
+function loadKeys(){
+    extend(false, global.config, JSON.parse(fs.readFileSync("./keys.json")));
+}
 
 

@@ -1,5 +1,6 @@
 {
-    "bot_token" : "NTE1MzA4MzM1NDQ5NTA1ODEy.D30v9A.NXJc_g_nwB5v_1kaICWGk1o1WXI",
+    "owner_id" : "199011082692460553",
+    "greet_owner" : false,
     "command_symbol" : "/",
     "defaultSongSkipPercentage" : 50,
     "streamMusic" : true
