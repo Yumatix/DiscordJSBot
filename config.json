@@ -1,7 +1,7 @@
 {
     "owner_id" : "199011082692460553",
     "greet_owner" : false,
-    "command_symbol" : "/",
+    "default_command_prefix" : "/",
     "defaultSongSkipPercentage" : 50,
     "streamMusic" : true
 }

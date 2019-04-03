@@ -19,9 +19,6 @@ module.exports.planned = function(args){
         },{
             "name":"Music Downloads",
             "value":"At the moment, music is streamed directly. In the future, options will be available to either stream music, or download the song as files before playing, to reduce lag/interference."
-        }, {
-            "name":"Per-server Configurations",
-            "value":"Capabilites for communicating with server owners through DMs in order to set up server specific settings like command permissions, etc."
         },{
             "name":"Moderation Assistance",
             "value":"Helpful commands to help server owners moderate their servers. Things like kick/ban commands, channel management commands, and more."
