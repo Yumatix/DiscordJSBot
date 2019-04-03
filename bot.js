@@ -49,7 +49,7 @@ client.on("message", (message) => {
 });
 
 client.on("guildCreate", (guild) => {
-    playNewServerMessage(guild);
+    //playNewServerMessage(guild);
 });
 
 //When a command is passed via CLI
@@ -103,6 +103,7 @@ function loadKeys(){
 }
 
 //Plays when the bot joins a new server for the first time
+//NOTE -- CURRENTLY DISABLED DUE TO BUGS
 function playNewServerMessage(guild){
 
     var ownerName = "";

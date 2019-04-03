@@ -1,11 +1,13 @@
 module.exports.info = function(args){
     var message = args[1];
 
+    let desc = "**Hello! My name is Ciel. I'm just another variation of the common music bot for Discord. Hopefully some of my features are useful to you!\n\n";
+    desc += `Type ${config.command_symbol}help to see what I can do.\n\n`;
+    desc += "Check out my author on [Github](https://www.github.com/users/Kristinosis)!**";
+
     let embed = {
-        "title" : `Hello! My name is Ciel. I'm just another variation of the common music bot for Discord. Hopefully some of my features are useful to you! 
-\nType ${config.command_symbol}help to see what I can do.
-\nCheck out my author on [Github](https://www.github.com/users/Kristinosis)!`,
-        "color" : 0x13b8e1,
+        "description" : desc,
+        "color" : 0x7936ca,
         "footer": {
             "text": `CielBot ${config.version}`
           }
