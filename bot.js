@@ -3,7 +3,8 @@ const fs = require("fs");
 const extend = require("extend");
 const readline = require("readline").createInterface({input:process.stdin,output:process.stdout});
 const Discord = require("discord.js");
-const MongoClient = require("mongodb").MongoClient;
+const DataManager = require("./DataManager.js");
+global.dataManager; //instance
 require("./commands.js");
 
 //Load config
@@ -15,10 +16,10 @@ console.log(`Starting CielBot V${config.version} ${config.development_stage} in 
 console.log("Loading guild preferences...");
 if (config.using_database){
     console.log("Using database connection!");
-    
+    dataManager = new DataManager(config.database_uri, config.database_name, config.using_database, config.database_cache_rate);
 } else {
     console.log("Not using database connection! Loading guild preferences from guildPrefs.json.");
-    global.guildPrefs = JSON.parse(fs.readFileSync("./Resources/guildPrefs.json"));
+    //global.guildPrefs = JSON.parse(fs.readFileSync("./Resources/guildPrefs.json"));
 }
 
 
@@ -34,18 +35,14 @@ client.on("ready", () => {
 
 //When client detects a message
 client.on("message", (message) => {
-    //PMs from owner
-    if (message.guild == null && message.author.id == config.owner_id){
-        //console.log("RECIEVED DM FROM OWNER");
-        //message.author.sendMessage("<Generic owner response>");
-
+    //PMs
+    if (message.guild == null){
         client.guilds.some(guild => {
             if (guild.owner.id == message.author.id && guild.setupScript) {
                 guild.setupScript.messageRecieved(message.content);
                 return true;
             }
         });
-        //if (message.guild.setupScript) message.guild.setupScript.messageRecieved(message.content);
     }
 
     //Guild messages
@@ -64,8 +61,7 @@ client.on("message", (message) => {
 });
 
 client.on("guildCreate", (guild) => {
-    guildPrefs[guild.id] = {command_prefix: "", default_channel: ""};
-    fs.writeFileSync("./guildPrefs.json", JSON.stringify(guildPrefs));
+    dataManager.updateGuildPrefs(guild.id, {command_prefix: "", default_channel: ""});
     guild.channels.some((channel) => {
         if (channel.type == "text" && channel.permissionsFor(guild.me).has("SEND_MESSAGES")){
             channel.send(`Hi, my name's Ciel, a music and utility bot for Discord! Type ${client.getGuildCommandPrefix(guild.id)}help for my commands, or ${client.getGuildCommandPrefix(guild.id)}info to learn about my creator.`);
@@ -126,10 +122,11 @@ function loadKeys(){
 }
 
 client.getGuildCommandPrefix = function(guildID){
-    return guildPrefs[guildID].command_prefix != "" ? guildPrefs[guildID].command_prefix : config.default_command_prefix;
+    //return guildPrefs[guildID].command_prefix != "" ? guildPrefs[guildID].command_prefix : config.default_command_prefix;
+    return dataManager.GuildPrefs[guildID].command_prefix || config.default_command_prefix;
 }
 
 client.getGuildDefaultChannel = function(guildID){
-    return guildPrefs[guildID].default_channel != "" ? guildPrefs[guildID].default_channel : null;
+    return dataManager.GuildPrefs[guildID].default_channel || null;
 }
 

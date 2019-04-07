@@ -12,17 +12,20 @@ var common_conf = {
     development_stage : "alpha",
     environment : environment,
     using_database : (args.nodb ? false : true),
+    database_cache_rate : 120000,
     default_command_prefix : "/"
 }
 
 //Environment configuration
 var conf = {
     prod : {
-        database_uri: args.dburi || ""
+        database_uri: args.dburi || "",
+        database_name: ""
     },
 
     dev : {
-        database_uri: args.dburi || "mongodb+srv://kristinosis:<password>@cluster0-zlmg0.mongodb.net/CielBot"
+        database_uri: args.dburi || "mongodb+srv://kristinosis:W1!d3Ycs5@cluster0-zlmg0.mongodb.net",
+        database_name: "CielBot"
     }
 }
 
