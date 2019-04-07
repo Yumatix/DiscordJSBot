@@ -3,15 +3,25 @@ const fs = require("fs");
 const extend = require("extend");
 const readline = require("readline").createInterface({input:process.stdin,output:process.stdout});
 const Discord = require("discord.js");
+const MongoClient = require("mongodb").MongoClient;
 require("./commands.js");
 
-//Load JSON config files
+//Load config
 console.log("Loading config...");
-global.config = JSON.parse(fs.readFileSync("./config.json")); //require("./config_internal.js");
-extend(false, global.config, JSON.parse(fs.readFileSync("package.json")));
+require("./Resources/config.js");
+console.log(`Starting CielBot V${config.version} ${config.development_stage} in environment: ${config.environment}`);
 
+//Load guild preferences
 console.log("Loading guild preferences...");
-global.guildPrefs = JSON.parse(fs.readFileSync("./guildPrefs.json"));
+if (config.using_database){
+    console.log("Using database connection!");
+    
+} else {
+    console.log("Not using database connection! Loading guild preferences from guildPrefs.json.");
+    global.guildPrefs = JSON.parse(fs.readFileSync("./Resources/guildPrefs.json"));
+}
+
+
 
 //Initiate bot
 const client = new Discord.Client();
@@ -20,14 +30,6 @@ client.queues = [];
 //When bot connects to Discord's servers
 client.on("ready", () => {
     console.log(`Bot initiated. Type '?' for command line commands, or type ${config.default_command_prefix}help in discord for bot commands.`);
-
-    if (config.owner_id != "" && config.greet_owner)
-        setTimeout(() => {
-            client.fetchUser(config.owner_id).then(user => {
-                user.sendMessage(`Greetings, ${user.username}! I'm Ciel, your new bot for Discord! From here, you can configure me and manage things like user permissions without digging through files!`);
-            });
-        }, 3000);
-
 });
 
 //When client detects a message
@@ -120,7 +122,7 @@ client.login(config.bot_token);
 
 
 function loadKeys(){
-    extend(false, global.config, JSON.parse(fs.readFileSync("./keys.json")));
+    extend(false, config, JSON.parse(fs.readFileSync("./keys.json")));
 }
 
 client.getGuildCommandPrefix = function(guildID){
