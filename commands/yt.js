@@ -20,7 +20,7 @@ module.exports.yt = function(args){
 
     //Form the request URL
     args.splice(0,2);
-    var query = args.toString();
+    var query = escape(args.toString());
     var requestURL = `https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=1&type=video&q=${query}&key=${config.google_api_key}`;
 
     //Send GET request
