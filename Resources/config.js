@@ -13,7 +13,8 @@ var common_conf = {
     environment : environment,
     using_database : (args.nodb ? false : true),
     database_cache_rate : 120000,
-    default_command_prefix : "/"
+    default_command_prefix : "/",
+    stream_music: true
 }
 
 //Environment configuration
