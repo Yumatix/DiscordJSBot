@@ -53,9 +53,9 @@ class Song {
             this.title = title;
             this.filePath = `./files/${vidID}.mp3`; 
 
-            if (config.streamMusic) {
+            if (config.stream_music) {
                 this.status = Song.states.READY;
-                if (this.playRequested) this.start();
+                if (this.playRequested) {this.start(); console.log("Playing")};
             }
             else this.status = Song.states.WAITING;
         });

@@ -36,12 +36,11 @@ module.exports = class ServerSetup{
         let strC = `Alright! So, what would you like your prefix to be? (Just respond to this message with your answer. Don't worry if you make a mistake, we'll go over everything first before I save any changes!)`;
         
         this.client.fetchUser(this.ownerID)
-        .then((user) => this.user.send(strA))
+        .then(() => this.user.send(strA))
         .then(() => this.user.send(strB))
         .then(() => this.user.send(strC));
 
         console.log(`${this.user.name} (${this.user.id}) started guild configuration for the guild ${this.guild.name} (${this.guild.id})`);
-        console.log(guildPrefs[this.guild.id]);
     }
 
     next(){
@@ -108,16 +107,17 @@ module.exports = class ServerSetup{
     }
 
     saveConfig(){
-        guildPrefs[this.guild.id].command_prefix = this.configuration[0].value;
-        guildPrefs[this.guild.id].default_channel = this.configuration[1].value;
+        dataManager.updateGuildPrefs(this.guild.id, {
+            command_prefix: this.configuration[0].value, 
+            default_channel: this.configuration[1].value
+        });
+        //guildPrefs[this.guild.id].command_prefix = this.configuration[0].value;
+        //guildPrefs[this.guild.id].default_channel = this.configuration[1].value;
 
         this.user.send("Okay! I saved your settings. Thanks for running setup!");
         this.guild.channels.get(this.configuration[1].value).send(`My command prefix has been updated. From now on, please put '${this.configuration[0].value}' in front of any commands! To see what I can do, type ${this.configuration[0].value}help.`);
 
-        console.log(guildPrefs[this.guild.id]);
         console.log(`Guild configuration finished for ${this.guild.name} (${this.guild.id}). Saving changes to file.`);
-        
-        fs.writeFileSync("./guildPrefs.json", JSON.stringify(guildPrefs));
     }
 
 }
