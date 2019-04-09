@@ -60,6 +60,7 @@ client.on("message", (message) => {
     }
 });
 
+//When bot joins a guild for the first time
 client.on("guildCreate", (guild) => {
     dataManager.updateGuildPrefs(guild.id, {command_prefix: "", default_channel: ""});
     guild.channels.some((channel) => {
@@ -69,6 +70,23 @@ client.on("guildCreate", (guild) => {
         }
     });
     guild.owner.send(`Hi, I'm Ciel! Thanks for inviting me to your guild: ${guild.name}! By the way, if you type ${client.getGuildCommandPrefix(guild.id)}config in any of your guild's text channels while I'm online, I'll DM you back with a little setup script, to help you personalize how I operate in your server!`);
+});
+
+//When anyone's voice state is updated...
+client.on("voiceStateUpdate", (oldMember, newMember) => {
+
+    if (!oldMember.guild.voiceConnection) return; //If the client isn't connected to the related channel, return
+
+    //If the member was in the client's channel before the change..
+    if (oldMember.voiceChannel == oldMember.guild.voiceConnection.channel){
+        //And after the change, the member is no longer in the client's voice channel..
+        if (newMember.voiceChannel != oldMember.guild.voiceConnection.channel){
+            //If the client is the only member left in said voice channel..
+            if (oldMember.guild.voiceConnection.channel.members.size == 1){
+                oldMember.guild.voiceConnection.disconnect();
+            }
+        }
+    }
 });
 
 //When a command is passed via CLI

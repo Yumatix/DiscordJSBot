@@ -8,8 +8,7 @@ module.exports.yt = function(args){
 
     //If the bot isn't in a voice channel, cancel.
     if (!message.guild.voiceConnection) {
-        message.channel.send("I'm not in a voice channel!");
-        return;
+        message.member.voiceChannel.join();
     }
 
     //If the message author isn't in the same voice channel as the client, reject the request.

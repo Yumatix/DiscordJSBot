@@ -1,35 +1,22 @@
 Yeah I'm lazy to make a proper todo list so here it is! 
 
+- Shutdown broadcast, with optional shutdown reason
+
 - Proper cli logging instead of always using console.logging
 
-- Guild-specific configuration
+- *More* Guild-specific configuration (permissions, etc)
+
+- Error handling all througout
+
+- Message deleting (delete command messages, delete "now playing" messages and links and stuff)
+
+- Moderation support
+
+- Auto disconnect 
 
 
+Long term: 
 
+- Maybe look into sharding and better hosting? Idek
 
-
-
-
-
-
-config script
-
-okay so say we wanna do some things... all this happens within the promise I guess?
-
--print intro
--print prompt about command prefix
--while <cmd_pfx> value is null, yield return null
--once <cmd_pfx> recieved, continue
--print explanation about default text channel
--search for all text channels in this user's Guild
--print them out, ask which they'd like to use
--while <dft_chl> is null, yield return null
--once <dft_chl> is recieved, continue
--confirmation prompt (show collected details)
--while waiting for confirmation, yield return null
--once confirmation recieved, save data to object (also, write json to file as a hard save)
-
-
-BUT how do we get those values? The input is from a discord message, without any prefix or anything.
-The only distinction is the message author and the fact that it's coming from the DMs.
-We recieve the messages with events, so we can't exactly do a classical prompt dialogue thingie. 
+- Some in-chat games! Things to do with friends I guess
