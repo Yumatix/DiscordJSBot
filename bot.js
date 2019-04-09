@@ -4,6 +4,7 @@ const extend = require("extend");
 const readline = require("readline").createInterface({input:process.stdin,output:process.stdout});
 const Discord = require("discord.js");
 const DataManager = require("./DataManager.js");
+const MessageManager = require("./MessageManager.js");
 global.dataManager; //instance
 require("./commands.js");
 
@@ -11,6 +12,9 @@ require("./commands.js");
 console.log("Loading config...");
 require("./Resources/config.js");
 console.log(`Starting CielBot V${config.version} ${config.development_stage} in environment: ${config.environment}`);
+global.messageManager = new MessageManager(config.message_delete_timeout);
+
+
 
 //Load guild preferences
 console.log("Loading guild preferences...");
@@ -48,6 +52,7 @@ client.on("message", (message) => {
     //Guild messages
     if (message.guild != null){
         if (message.content.substring(0,1) == client.getGuildCommandPrefix(message.guild.id)){
+            messageManager.addCommandMessage(message);
             var substrings = message.content.split(" ");
             var command = substrings[0].substring(1);
             var args = substrings;
@@ -65,7 +70,8 @@ client.on("guildCreate", (guild) => {
     dataManager.updateGuildPrefs(guild.id, {command_prefix: "", default_channel: ""});
     guild.channels.some((channel) => {
         if (channel.type == "text" && channel.permissionsFor(guild.me).has("SEND_MESSAGES")){
-            channel.send(`Hi, my name's Ciel, a music and utility bot for Discord! Type ${client.getGuildCommandPrefix(guild.id)}help for my commands, or ${client.getGuildCommandPrefix(guild.id)}info to learn about my creator.`);
+            channel.send(`Hi, my name's Ciel, a music and utility bot for Discord! Type ${client.getGuildCommandPrefix(guild.id)}help for my commands, or ${client.getGuildCommandPrefix(guild.id)}info to learn about my creator.`)
+            .then((message) => messageManager.addResponseMessage(message));
             return true;
         }
     });

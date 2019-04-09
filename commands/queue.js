@@ -4,12 +4,6 @@ module.exports.queue = function(args){
     //If the bot isn't in a voice channel, cancel.
     if (!message.guild.voiceConnection) {return;}
 
-    //If the message author isn't in the same voice channel as the client, reject the request.
-    if (!message.member.voiceChannel || message.member.voiceChannel != message.guild.voiceConnection.channel){
-        message.channel.send("You're not in my voice channel, I can't accept that!");
-        return;
-    }
-
     if (message.guild.queue.queue.length > 0) {
 
         let songlist = "";
@@ -23,10 +17,10 @@ module.exports.queue = function(args){
             "description" : songlist
         }
 
-        message.channel.send({embed: embed});
+        message.channel.send({embed: embed}).then(message => messageManager.addResponseMessage(message));
 
     } else {
-        message.channel.send("Queue empty.");
+        message.channel.send("Queue empty.").then(message => messageManager.addResponseMessage(message));
     }
 }
 module.exports.queue.syntax = "queue";

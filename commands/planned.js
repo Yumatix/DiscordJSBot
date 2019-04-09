@@ -28,7 +28,7 @@ module.exports.planned = function(args){
         }
     };
 
-    message.channel.send({embed: embed});
+    message.channel.send({embed: embed}).then(message => messageManager.addResponseMessage(message));
 };
 
 module.exports.planned.syntax = "planned"; 

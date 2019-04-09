@@ -13,7 +13,7 @@ module.exports.yt = function(args){
 
     //If the message author isn't in the same voice channel as the client, reject the request.
     if (!message.member.voiceChannel || message.member.voiceChannel != message.guild.voiceConnection.channel){
-        message.channel.send("You're not in my voice channel, I can't accept that!");
+        message.channel.send("You're not in my voice channel, I can't accept that!").then(message => messageManager.addResponseMessage(message));
         return;
     }
 

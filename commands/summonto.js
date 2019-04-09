@@ -7,11 +7,13 @@ module.exports.summonto = function(args){
                 console.log(`Summoned by ${message.author}(${message.author.username}) to channel ${connection.channel}(${connection.channel.name}) on guild ${connection.channel.guild}(${connection.channel.guild.name})`);
             });
         } else {
-            message.channel.send(`Voice channel "${channelName}" not found on this server.`);
+            message.channel.send(`Voice channel "${channelName}" not found on this server.`)
+            .then(message => messageManager.addResponseMessage(message));
         }
     }
     else {
-        message.channel.send("You must specify a channel to join!");
+        message.channel.send("You must specify a channel to join!")
+        .then(message => messageManager.addResponseMessage(message));
     }
 };
 module.exports.summonto.syntax = "summonto <channel_name>";

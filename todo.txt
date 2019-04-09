@@ -2,7 +2,7 @@ Yeah I'm lazy to make a proper todo list so here it is!
 
 - Shutdown broadcast, with optional shutdown reason
 
-- Proper cli logging instead of always using console.logging
+- Proper cli logging instead of always using console.log
 
 - *More* Guild-specific configuration (permissions, etc)
 
@@ -12,8 +12,7 @@ Yeah I'm lazy to make a proper todo list so here it is!
 
 - Moderation support
 
-- Auto disconnect 
-
+- Update notices in servers (broadcast when updated)
 
 Long term: 
 

@@ -32,7 +32,7 @@ module.exports = class DataManager{
                 if (k != "guild_id") { obj[k] = doc[k]; }
             });
             _this.GuildPrefs[doc.guild_id] = obj;
-        }).then(() => console.log(this.GuildPrefs));
+        }).then(() => console.log("Done fetching guild preferences."));
     }
 
     updateGuildPrefs(guild_id, prefs){
@@ -44,5 +44,38 @@ module.exports = class DataManager{
         //Push updates to remote
         prefs.guild_id = guild_id;
         this.db.collection("Guilds").replaceOne({guild_id: guild_id}, prefs, {upsert: true});
+    }
+
+    checkPatchNotes(currentVersion){
+        //Create promise
+        return new Promise((resolve, reject) => {
+            console.log("Checking patch notes...");
+            currentVersion = currentVersion.split(".");
+            var patchNotes = [];
+            var cursor = this.db.collection("Versions").find();
+            
+            //Iterate over each document in the versions collection
+            cursor.forEach(doc => {
+                let version = doc.number.split(".");
+                if (version[1] == currentVersion[1] && version[0] == currentVersion[0]){
+                    let versionNotes = {};
+                    versionNotes.name = doc.number;
+
+                    let versionNotesFields = "";
+                    doc.notes.forEach(note => {
+                        versionNotesFields += ` - ${note}\n`;
+                    });
+                    versionNotes.value = versionNotesFields;
+
+                    patchNotes.push(versionNotes);
+                }
+            })
+            
+            .then(() => {
+                resolve(patchNotes);
+            });
+
+            
+        })
     }
 }

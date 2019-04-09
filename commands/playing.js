@@ -7,7 +7,7 @@ module.exports.playing = function(args){
         message.guild.fetchMember(current.requester).then(member => {
             let reply = `Currently playing in ${message.guild.voiceConnection.channel.name}: ${current.title}
 Requested by: ${member.nickname || member.user.username}\n\n${current.url}`;
-            message.channel.send(reply);
+            message.channel.send(reply).then(message => messageManager.addResponseMessage(message));
         });
     }
 };

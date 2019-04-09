@@ -8,7 +8,7 @@ module.exports.help = function(args){
         if(commands[c].cliOnly) return;
         if (!commands[c].syntax || !commands[c].description) {console.log(`WARN: Command "${c}" is missing either syntax or descriptor information!`); return;} 
         var reply = {fields: [{name: client.getGuildCommandPrefix(message.guild.id) + commands[c].syntax, value: commands[c].description}]};
-        message.channel.send({embed: reply});
+        message.channel.send({embed: reply}).then(message => messageManager.addResponseMessage(message));
     }
     else {
         sortedKeys = Object.keys(commands);
@@ -22,7 +22,7 @@ module.exports.help = function(args){
             var field = {name: client.getGuildCommandPrefix(message.guild.id) + commands[key].syntax, value: commands[key].description};
             fields.push(field);
         });
-        message.channel.send({embed: {fields: fields}});
+        message.channel.send({embed: {color: 0x7936ca, fields: fields}}).then(message => messageManager.addResponseMessage(message));
     }
 };
 module.exports.help.syntax = "help <command>";

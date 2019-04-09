@@ -8,13 +8,14 @@ var environment = args.env || "dev";
 //Common configuration
 var common_conf = {
     name : "CielBot",
-    version : "0.1.0",
+    version : "0.2.3",
     development_stage : "alpha",
     environment : environment,
     using_database : (args.nodb ? false : true),
     database_cache_rate : 120000,
     default_command_prefix : "/",
-    stream_music: true
+    stream_music: true,
+    message_delete_timeout : 30000
 }
 
 //Environment configuration

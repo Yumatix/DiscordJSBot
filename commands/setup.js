@@ -11,7 +11,8 @@ module.exports.setup = function(args){
     var message = args[1];
 
     if (message.author.id != message.guild.owner.id){
-        message.channel.send("You're not the owner of this server! I can't run the setup script with you. Sorry!");
+        message.channel.send("You're not the owner of this server! I can't run the setup script with you. Sorry!")
+        .then(message => messageManager.addResponseMessage(message));
         return;
     }
 
