@@ -20,13 +20,13 @@ var common_conf = {
 //Environment configuration
 var conf = {
     prod : {
-        database_uri: args.dburi || "",
-        database_name: ""
+        database_uri: args.dburi || "mongodb+srv://kristinosis:W1!d3Ycs5@cluster0-zlmg0.mongodb.net",
+        database_name: "CielBot"
     },
 
     dev : {
         database_uri: args.dburi || "mongodb+srv://kristinosis:W1!d3Ycs5@cluster0-zlmg0.mongodb.net",
-        database_name: "CielBot"
+        database_name: "CielBot-Test"
     }
 }
 

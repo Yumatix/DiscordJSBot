@@ -4,10 +4,9 @@ module.exports.play = function(args){
     var message = args[1];
     var url = args[2];
 
-    //If the bot isn't in a voice channel, cancel.
+    //If the bot isn't in a voice channel, join.
     if (!message.guild.voiceConnection) {
-        message.channel.send("I'm not in a voice channel!");
-        return;
+        message.member.voiceChannel.join();
     }
 
     //If the message author isn't in the same voice channel as the client, reject the request.
